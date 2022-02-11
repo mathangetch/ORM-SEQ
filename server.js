@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const req = require("express/lib/request");
+const bodyParser = require("body-parser");
 
 const app = express();
 
@@ -8,15 +9,15 @@ var corsOptions = {
   orgin: "https://localhost:4041",
 };
 
+//middle ware
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+
 // routers
 
 const router = require("./routes/productRouter");
 app.use("/api/products", router);
-
-//middle ware
-app.use(cors(corsOptions));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 //testing api
 app.get("/", (req, res) => {

@@ -4,55 +4,55 @@ const db = require("../models");
 const Product = db.products;
 const Review = db.reviews;
 
-//main workflow
+//  1. create a new record
 const add = async (req, res) => {
-
-  // console.log(req.body.title);
-  // res.send(req.body.description);
-  let info = 
-  {
+  // console.log("=========================");
+  // console.log(req.body);
+  let info = {
     title: req.body.title,
     price: req.body.price,
     descriptioon: req.body.descriptioon,
     published: req.body.published ? req.body.published : false,
   };
 
-  console.log(info);
-  const product = await Product.create(info).then(() => {
-    res.status(200).send(product);
-  }).catch(err => {
-    res.send(err)
-  })
-  
+  // console.log(info);
+  const product = await Product.create(info)
+    .then(() => {
+      res.status(200).send(info);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
 };
 
-// get all product
+// 2. get info of all product
 const getAllProducts = async (req, res) => {
   let products = await Product.findAll({});
   res.send(products);
 };
 
-// get single product from
+// 3. get info of a single product
 const getOneProduct = async (req, res) => {
   let id = req.params.id;
   let product = await Product.findOne({ where: { id: id } });
   res.status(200).send(product);
 };
 
-// get single product from
+// 4. to update a product
 const updateProduct = async (req, res) => {
   let id = req.params.id;
   let product = await Product.update(req.body, { where: { id: id } });
   res.status(200).send(product);
 };
-// delet by id
+
+// 5. to delete a product
 const deleteProduct = async (req, res) => {
   let id = req.params.id;
   await Product.destroy({ where: { id: id } });
   res.status(200).send("producted deleted");
 };
-// get published
 
+// get published
 const getPublished = async (req, res) => {
   const products = await Product.findAll({ where: { published: true } });
   res.status(200).send(products);
