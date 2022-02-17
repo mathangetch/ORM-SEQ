@@ -15,11 +15,12 @@ const addReview = async (req, res) => {
   res.status(200).send(rview);
 };
 
+
+// TO VIEW REVIEWS
 const getallA = async (req, res) => {
   console.log("testing get all");
   let xyz = await Review.findAll({});
-  
-  res.send(xyz);
+   res.send(xyz);
 };
 
 module.exports = {

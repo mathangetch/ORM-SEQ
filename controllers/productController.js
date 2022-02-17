@@ -56,7 +56,7 @@ const getPublished = async (req, res) => {
   const products = await Product.findAll({ where: { published: true } });
   res.status(200).send(products);
 };
-
+// TO GET ONE PRODUCT-REVIEW
 const getpreview = async (req, res) => {
   const id = req.params.id;
   const data = await Product.findOne({
@@ -71,8 +71,8 @@ const getpreview = async (req, res) => {
   res.status(200).send(data);
 };
 
+// TO GET ALL THE PRODUCT REVIEW
 const getallreview = async (req, res) => {
-  console.log("=============================================");
   const view = await Product.findAll({
     include: [
       {
@@ -84,6 +84,7 @@ const getallreview = async (req, res) => {
   res.status(200).send(view);
 };
 
+// EXPORTING THE MODULES
 module.exports = {
   add,
   getAllProducts,
