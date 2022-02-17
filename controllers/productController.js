@@ -1,3 +1,4 @@
+const { products } = require("../models");
 const db = require("../models");
 
 // create main model
@@ -6,8 +7,6 @@ const Review = db.reviews;
 
 //  1. create a new record
 const add = async (req, res) => {
-  // console.log("=========================");
-  // console.log(req.body);
   let info = {
     title: req.body.title,
     price: req.body.price,
@@ -58,6 +57,33 @@ const getPublished = async (req, res) => {
   res.status(200).send(products);
 };
 
+const getpreview = async (req, res) => {
+  const id = req.params.id;
+  const data = await Product.findOne({
+    include: [
+      {
+        model: Review,
+        as: "review",
+      },
+    ],
+    where: { id: id },
+  });
+  res.status(200).send(data);
+};
+
+const getallreview = async (req, res) => {
+  console.log("=============================================");
+  const view = await Product.findAll({
+    include: [
+      {
+        model: Review,
+        as: "review",
+      },
+    ],
+  });
+  res.status(200).send(view);
+};
+
 module.exports = {
   add,
   getAllProducts,
@@ -65,4 +91,6 @@ module.exports = {
   updateProduct,
   deleteProduct,
   getPublished,
+  getpreview,
+  getallreview,
 };
